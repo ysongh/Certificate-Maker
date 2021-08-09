@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Navbar from './components/layout/Navbar';
+import CertificateTemplateList from './pages/CertificateTemplateList';
 import CertificateForm from './pages/CertificateForm';
 import './App.css';
 
@@ -14,7 +15,7 @@ function App() {
           <CertificateForm />
         </Route>
         <Route path="/">
-          <h1>Certificate Maker</h1>
+          <CertificateTemplateList />
         </Route>
       </Switch>
     </Router>
