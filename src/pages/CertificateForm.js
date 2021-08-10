@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { Container, Card, Form, Button } from 'semantic-ui-react';
 
 import { SLATEAPIKEY, CERTIFICATETEMPLATE_COLLECTIONID } from '../config';
+import Spinner from '../components/common/Spinner';
 
 function CertificateForm() {
+  const history = useHistory();
+
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
   const [detail, setDetail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const getFile = async event => {
     const file = event.target.files[0];
@@ -15,20 +20,30 @@ function CertificateForm() {
   }
 
   const uploadFileToSlate = async () => {
-    const url = `https://uploads.slate.host/api/public/${CERTIFICATETEMPLATE_COLLECTIONID}`;
+    try{
+      setLoading(true);
+      const url = `https://uploads.slate.host/api/public/${CERTIFICATETEMPLATE_COLLECTIONID}`;
 
-    let data = new FormData();
-    data.append("data", image);
+      let data = new FormData();
+      data.append("data", image);
+      data.append("filename", name);
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        Authorization: SLATEAPIKEY,
-      },
-      body: data
-    });
-    const json = await response.json();
-    console.log(json);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Authorization: SLATEAPIKEY,
+        },
+        body: data
+      });
+      const json = await response.json();
+      console.log(json);
+      setLoading(false);
+      history.push('/');
+    }
+    catch(err) {
+      console.error(err);
+      setLoading(false);
+    }
   }
 
   return (
@@ -50,6 +65,7 @@ function CertificateForm() {
               color="black"
               onClick={uploadFileToSlate}
             >Submit</Button>
+            {loading && <Spinner text="Creating..." />}
           </Form>
         </Card.Content>
       </Card>
