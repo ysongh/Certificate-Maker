@@ -5,10 +5,10 @@ import { Container, Card, Form, Button } from 'semantic-ui-react';
 import { SLATEAPIKEY, CERTIFICATETEMPLATE_COLLECTIONID } from '../config';
 import Spinner from '../components/common/Spinner';
 
-function CertificateForm() {
+function CertificateForm({ walletAddress, contract }) {
   const history = useHistory();
 
-  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const [detail, setDetail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,6 @@ function CertificateForm() {
 
       let data = new FormData();
       data.append("data", image);
-      data.append("filename", name);
 
       const response = await fetch(url, {
         method: 'POST',
@@ -37,6 +36,11 @@ function CertificateForm() {
       });
       const json = await response.json();
       console.log(json);
+
+      await contract.methods
+        .mintCertificateTemplateNFT(json.data.cid, window.web3.utils.toWei(price, 'Ether'))
+        .send({ from: walletAddress });
+
       setLoading(false);
       history.push('/');
     }
@@ -52,8 +56,8 @@ function CertificateForm() {
         <Card.Content>
           <Form>
             <Form.Field>
-              <label>Name</label>
-              <input value={name} onChange={(e) => setName(e.target.value)} />
+              <label>Price</label>
+              <input value={price} onChange={(e) => setPrice(e.target.value)} />
             </Form.Field>
             <Form.Field>
               <label>Image</label>

@@ -18,7 +18,9 @@ function App() {
         setContract={setContract} />
       <Switch>
         <Route path="/add-certificate">
-          <CertificateForm />
+          <CertificateForm
+            walletAddress={walletAddress}
+            contract={contract} />
         </Route>
         <Route path="/">
           <CertificateTemplateList />

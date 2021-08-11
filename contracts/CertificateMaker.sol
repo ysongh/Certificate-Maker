@@ -23,7 +23,7 @@ contract CertificateMaker is ERC721 {
 
   constructor() ERC721("Certificate Maker", "CMR")  public {}
 
-  function mintCodeworkNFT(string memory _certificateURL, uint _price) external {
+  function mintCertificateTemplateNFT(string memory _certificateURL, uint _price) external {
     uint _tokenId = totalSupply().add(1);
     _safeMint(msg.sender, _tokenId);
     _setTokenURI(_tokenId, _certificateURL);
