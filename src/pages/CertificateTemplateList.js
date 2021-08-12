@@ -63,7 +63,7 @@ function CertificateTemplateList() {
                 <Card.Content>
                   <Card.Header>{certificate.filename}</Card.Header>
                   <div style={{marginTop: '.7rem'}}>
-                    <Button basic color='green' as={Link}>
+                    <Button basic color='green' as={Link} to="/certificate-maker">
                       View
                     </Button>
                   </div>
