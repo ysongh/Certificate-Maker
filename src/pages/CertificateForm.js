@@ -11,6 +11,7 @@ function CertificateForm({ walletAddress, contract }) {
 
   const [price, setPrice] = useState('');
   const [imageURL, setImageURL] = useState('');
+  const [cid, setcid] = useState('');
   const [loadingImage, setLoadingImage] = useState(false);
   const [loadingCreate, setLoadingCreate] = useState(false);
 
@@ -33,6 +34,7 @@ function CertificateForm({ walletAddress, contract }) {
       const json = await response.json();
       console.log(json);
       setImageURL(`https://slate.textile.io/ipfs/${json.data.cid}`);
+      setcid(json.data.cid);
       setLoadingImage(false);
     }
     catch(err) {
@@ -45,7 +47,7 @@ function CertificateForm({ walletAddress, contract }) {
     try{
       setLoadingCreate(true);
       const res = await contract.methods
-        .mintCertificateTemplateNFT(imageURL, window.web3.utils.toWei(price, 'Ether'))
+        .mintCertificateTemplateNFT(cid, imageURL, window.web3.utils.toWei(price, 'Ether'))
         .send({ from: walletAddress });
       console.log('mintCertificateTemplateNFT', res);
 
