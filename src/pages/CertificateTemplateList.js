@@ -6,8 +6,16 @@ import { SLATEAPIKEY, CERTIFICATETEMPLATE_COLLECTIONID } from '../config';
 
 function CertificateTemplateList() {
   const [certificateTemplates, setCertificateTemplates] = useState([]);
+  const [showUnlockBtn, setShowUnlockBtn] = useState(true);
 
   useEffect(() => {
+    window.addEventListener('unlockProtocol.status', function(event) {
+      if(event.detail.state === "unlocked"){
+        loadWorks();
+        setShowUnlockBtn(false);
+      }
+    })
+    
     const loadWorks = async () => {
       const response = await fetch('https://slate.host/api/v2/get-collection', {
         method: 'POST',
@@ -34,12 +42,18 @@ function CertificateTemplateList() {
         console.log(collection)
       }
     }
-
-    loadWorks();
   }, [])
+
+  const unlock = () => {
+    window.unlockProtocol && window.unlockProtocol.loadCheckoutModal();
+  }
 
   return (
     <Container>
+      <h1>Create your own certificate</h1>
+      {showUnlockBtn && <Button color="purple" onClick={unlock} size="large">
+        Unlock Template
+      </Button>}
       <Grid columns={3} doubling>
         <Grid.Row>
           {certificateTemplates.map(certificate => (
