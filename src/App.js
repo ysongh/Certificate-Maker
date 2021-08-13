@@ -23,7 +23,7 @@ function App() {
             walletAddress={walletAddress}
             contract={contract} />
         </Route>
-        <Route path="/certificate-maker">
+        <Route path="/certificate-maker/:cid">
           <CertificateMaker
             walletAddress={walletAddress}
             contract={contract} />
