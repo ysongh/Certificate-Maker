@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Grid, Card, Image, Form, Button } from 'semantic-ui-react';
 
-function CertificateMaker({ contract }) {
+import Spinner from '../components/common/Spinner';
+
+function CertificateMaker({ walletAddress, contract }) {
   const { cid } = useParams();
 
   const [title, setTitle] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
+  const [recipient, setRecipient] = useState('');
+  const [loadingCreate, setLoadingCreate] = useState(false);
 
   useEffect(() => {
     const loadDataFromNFT = async () => {
@@ -19,6 +23,21 @@ function CertificateMaker({ contract }) {
     if(contract) loadDataFromNFT();
   }, [contract, cid])
 
+  const createCertificateTemplate = async () => {
+    try{
+      setLoadingCreate(true);
+      const res = await contract.methods
+        .mintCertificateNFT(cid, recipient)
+        .send({ from: walletAddress });
+      console.log('createCertificateTemplate', res);
+
+      setLoadingCreate(false);
+    }
+    catch(err) {
+      console.error(err);
+      setLoadingCreate(false);
+    }
+  }
   return (
     <Container>
       <h1 style={{ textAlign: 'center' }}>Create your own certificate</h1>
@@ -44,6 +63,10 @@ function CertificateMaker({ contract }) {
                     <label>Name</label>
                     <input value={name} onChange={(e) => setName(e.target.value)} />
                   </Form.Field>
+                  <Form.Field>
+                    <label>Recipient's Address</label>
+                    <input value={recipient} onChange={(e) => setRecipient(e.target.value)} />
+                  </Form.Field>
                   
                   {contract 
                     ? <>
@@ -51,11 +74,13 @@ function CertificateMaker({ contract }) {
                         <Button
                           type='submit'
                           color="black"
+                          onClick={createCertificateTemplate}
                         >Mint NFT</Button>
                       </>
                       
                     : <p className="red-text">Connect to wallet</p>
                   }
+                  {loadingCreate && <Spinner text="Creating..." />}
                 </Form>
               </Card.Content>
             </Card>

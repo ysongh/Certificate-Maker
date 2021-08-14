@@ -19,17 +19,27 @@ contract CertificateMaker is ERC721 {
     address payable from
   );
 
+  event CertificateNFTCreated (
+    uint tokenId,
+    string cid,
+    uint date,
+    address payable from,
+    address payable to
+  );
+
   constructor() ERC721("Certificate Maker", "CMR")  public {}
 
-  function createCertificateTemplate(string memory cid, uint _price) external {
-    certificateTemplateList[cid] = CertificateTemplate(cid, now, _price, msg.sender);
+  function createCertificateTemplate(string memory _cid, uint _price) external {
+    certificateTemplateList[_cid] = CertificateTemplate(_cid, now, _price, msg.sender);
 
-    emit CertificateTemplateCreated(cid, now, _price, msg.sender);
+    emit CertificateTemplateCreated(_cid, now, _price, msg.sender);
   }
 
-  // function mintCertificateTemplateNFT(string memory cid, string memory _certificateURL, uint _price) external {
-  //   uint _tokenId = totalSupply().add(1);
-  //   _safeMint(msg.sender, _tokenId);
-  //   _setTokenURI(_tokenId, _certificateURL);
-  // }
+  function mintCertificateNFT(string memory _cid, address payable _to) external {
+    uint _tokenId = totalSupply().add(1);
+    _safeMint(_to, _tokenId);
+    _setTokenURI(_tokenId, _cid);
+
+    emit CertificateNFTCreated(_tokenId, _cid, now, msg.sender, _to);
+  }
 }
