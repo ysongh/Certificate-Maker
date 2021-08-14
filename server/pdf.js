@@ -21,31 +21,31 @@ async function embedImages(imageURL){
     height: pngDims.height,
   })
 
-	const pages = pdfDoc.getPages();
-	const firstPage = pages[0];
-	const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const pages = pdfDoc.getPages();
+  const firstPage = pages[0];
+  const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-	const { width, height } = firstPage.getSize();
-	const size = 30;
+  const { width, height } = firstPage.getSize();
+  const size = 30;
 
-	firstPage.drawText("TEST", {
-			x: 255,
-			y: height / 2,
-			size: size,
-			font: helveticaFont
-	});
+  firstPage.drawText("TEST", {
+      x: 255,
+      y: height / 2,
+      size: size,
+      font: helveticaFont
+  });
 
   const pdfBytes = await pdfDoc.save()
 
-	return pdfBytes;
+  return pdfBytes;
 }
 // GET /api/pdf/createcertificate
 // Create a certificate
 router.get('/', async (req, res) => {
     const pdfFile = await embedImages('https://slate.textile.io/ipfs/bafybeifzesppughfws5dietbxk4wznktaru7ciseuefrwplld3tiqhoo6e');
-		console.log(pdfFile);
+    console.log(pdfFile);
 
-		res.setHeader("Content-Length", pdfFile.length);
+    res.setHeader("Content-Length", pdfFile.length);
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Content-Disposition", "filename=test.pdf");
     res.send(new Buffer.from(pdfFile));

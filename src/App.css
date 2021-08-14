@@ -2,3 +2,28 @@
     color: red;
     font-size: 1.2rem;
 }
+
+.certificatemaker {
+    position: relative;
+}
+
+.certificatemaker__onTop {
+    position: absolute;
+    display: block;
+    font-size: 1.4rem;
+}
+
+.certificatemaker__infor {
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.4rem;
+}
+
+.certificatemaker__name {
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.4rem;
+    text-decoration: underline;
+}
