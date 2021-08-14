@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Grid, Card, Image, Form, Button } from 'semantic-ui-react';
 
+import { SERVER_URL } from '../config';
 import Spinner from '../components/common/Spinner';
 
 function CertificateMaker({ walletAddress, contract }) {
@@ -26,6 +27,28 @@ function CertificateMaker({ walletAddress, contract }) {
   const createCertificateTemplate = async () => {
     try{
       setLoadingCreate(true);
+
+      const response = await fetch(SERVER_URL + 'api/pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'image_url': `https://slate.textile.io/ipfs/${cid}`,
+          'title': title,
+          'name': name
+        })
+      });
+
+      if (!response) {
+        console.log('No response');
+        return;
+      }
+
+      const json = await response.json();
+
+      console.log(json);
+
       const res = await contract.methods
         .mintCertificateNFT(cid, recipient)
         .send({ from: walletAddress });
