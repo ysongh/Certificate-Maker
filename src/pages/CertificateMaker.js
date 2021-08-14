@@ -12,6 +12,9 @@ function CertificateMaker({ walletAddress, contract }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [recipient, setRecipient] = useState('');
+  const [statusText, setStatusText] = useState('');
+  const [transactionHash, setTransactionHash] = useState('');
+  const [certificateURL, setCertificateURL] = useState('');
   const [loadingCreate, setLoadingCreate] = useState(false);
 
   useEffect(() => {
@@ -27,6 +30,7 @@ function CertificateMaker({ walletAddress, contract }) {
   const createCertificateTemplate = async () => {
     try{
       setLoadingCreate(true);
+      setStatusText("Creating Certificate...");
 
       const response = await fetch(SERVER_URL + 'api/pdf', {
         method: 'POST',
@@ -46,14 +50,15 @@ function CertificateMaker({ walletAddress, contract }) {
       }
 
       const json = await response.json();
-
+      setStatusText("Minting NFT...");
+      setCertificateURL(json.url + "/certificate.pdf");
       console.log(json);
 
       const res = await contract.methods
         .mintCertificateNFT(cid, recipient)
         .send({ from: walletAddress });
       console.log('createCertificateTemplate', res);
-
+      setTransactionHash(res.transactionHash);
       setLoadingCreate(false);
     }
     catch(err) {
@@ -66,7 +71,7 @@ function CertificateMaker({ walletAddress, contract }) {
       <h1 style={{ textAlign: 'center' }}>Create your own certificate</h1>
       <Grid divided='vertically'>
         <Grid.Row>
-          <Grid.Column width={9}>
+          <Grid.Column mobile={16} tablet={9} computer={9}>
             <Image className="certificatemaker" src={`https://slate.textile.io/ipfs/${cid}`} />
             <p className="certificatemaker__onTop certificatemaker__infor">
               {title}
@@ -74,7 +79,7 @@ function CertificateMaker({ walletAddress, contract }) {
               {name}
             </p>\
           </Grid.Column>
-          <Grid.Column width={7}>
+          <Grid.Column mobile={16} tablet={7} computer={7}>
             <Card centered style={{ width: '100%'}}>
               <Card.Content>
                 <Form>
@@ -103,10 +108,28 @@ function CertificateMaker({ walletAddress, contract }) {
                       
                     : <p className="red-text">Connect to wallet</p>
                   }
-                  {loadingCreate && <Spinner text="Creating..." />}
+                  {loadingCreate && <Spinner text={statusText} />}
                 </Form>
               </Card.Content>
             </Card>
+
+            {certificateURL &&
+              <p className="transactionHash">
+                Certificate URL, {" "}
+                <a href={certificateURL} target="_blank" rel="noopener noreferrer">
+                  Link
+                </a>
+              </p>
+            }
+
+            {transactionHash &&
+              <p className="transactionHash">
+                Success, see transaction {" "}
+                <a href={`https://mumbai.polygonscan.com/tx/${transactionHash}`} target="_blank" rel="noopener noreferrer">
+                  {transactionHash.substring(0, 10) + '...' + transactionHash.substring(56, 66)}
+                </a>
+              </p>
+            }
           </Grid.Column>
         </Grid.Row>
       </Grid>

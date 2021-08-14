@@ -3,6 +3,11 @@
     font-size: 1.2rem;
 }
 
+.transactionHash{
+    color: green;
+    font-size: 1.4rem;
+}
+
 .certificatemaker {
     position: relative;
 }

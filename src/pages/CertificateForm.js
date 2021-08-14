@@ -67,7 +67,7 @@ function CertificateForm({ walletAddress, contract }) {
           <Form>
             <Form.Group widths='equal'>
               <Form.Field>
-                <label>Image</label>
+                <label>Upload Certificate Template (PNG only)</label>
                 <input type="file" onChange={uploadFileToSlate}/>
               </Form.Field>
               <Form.Field>
