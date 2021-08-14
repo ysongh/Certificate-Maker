@@ -79,7 +79,7 @@ router.post('/', async (req, res) => {
   const cid = await client.storeDirectory([
     new File([pdfFile], 'certificate.pdf'),
     new File([JSON.stringify(
-        { test: "test" },
+        { title, name },
         null,
         2
     )], 'metadata.json')
