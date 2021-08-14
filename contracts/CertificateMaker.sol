@@ -7,8 +7,6 @@ contract CertificateMaker is ERC721 {
 
   struct CertificateTemplate {
     string cid;
-    uint tokenId;
-    string certificateURL;
     uint date;
     uint price;
     address payable from;
@@ -16,8 +14,6 @@ contract CertificateMaker is ERC721 {
 
   event CertificateTemplateCreated (
     string cid,
-    uint tokenId,
-    string certificateURL,
     uint date,
     uint price,
     address payable from
@@ -25,13 +21,15 @@ contract CertificateMaker is ERC721 {
 
   constructor() ERC721("Certificate Maker", "CMR")  public {}
 
-  function mintCertificateTemplateNFT(string memory cid, string memory _certificateURL, uint _price) external {
-    uint _tokenId = totalSupply().add(1);
-    _safeMint(msg.sender, _tokenId);
-    _setTokenURI(_tokenId, _certificateURL);
+  function createCertificateTemplate(string memory cid, uint _price) external {
+    certificateTemplateList[cid] = CertificateTemplate(cid, now, _price, msg.sender);
 
-    certificateTemplateList[cid] = CertificateTemplate(cid, _tokenId, _certificateURL, now, _price, msg.sender);
-
-    emit CertificateTemplateCreated(cid, _tokenId, _certificateURL, now, _price, msg.sender);
+    emit CertificateTemplateCreated(cid, now, _price, msg.sender);
   }
+
+  // function mintCertificateTemplateNFT(string memory cid, string memory _certificateURL, uint _price) external {
+  //   uint _tokenId = totalSupply().add(1);
+  //   _safeMint(msg.sender, _tokenId);
+  //   _setTokenURI(_tokenId, _certificateURL);
+  // }
 }

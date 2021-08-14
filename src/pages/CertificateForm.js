@@ -47,7 +47,7 @@ function CertificateForm({ walletAddress, contract }) {
     try{
       setLoadingCreate(true);
       const res = await contract.methods
-        .mintCertificateTemplateNFT(cid, imageURL, window.web3.utils.toWei(price, 'Ether'))
+        .createCertificateTemplate(cid, window.web3.utils.toWei(price, 'Ether'))
         .send({ from: walletAddress });
       console.log('mintCertificateTemplateNFT', res);
 
@@ -80,11 +80,14 @@ function CertificateForm({ walletAddress, contract }) {
               ? <PlaceholderImage />
               : imageURL && <Image src={imageURL} alt="Certificate Template" fluid />}
             
-            <Button
-              type='submit'
-              color="black"
-              onClick={createCertificateTemplate}
-            >Submit</Button>
+            {walletAddress
+              ? <Button
+                  type='submit'
+                  color="black"
+                  onClick={createCertificateTemplate}
+                >Submit</Button>
+              : <p className="red-text">Connect to wallet</p>
+            }
             {loadingCreate && <Spinner text="Creating..." />}
           </Form>
         </Card.Content>
