@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { Container, Card, Form, Image, Button } from 'semantic-ui-react';
+import { Container, Card, Form, Input, Image, Button } from 'semantic-ui-react';
 
 import { SLATEAPIKEY, CERTIFICATETEMPLATE_COLLECTIONID } from '../config';
 import Spinner from '../components/common/Spinner';
@@ -10,10 +10,27 @@ function CertificateForm({ walletAddress, contract }) {
   const history = useHistory();
 
   const [price, setPrice] = useState('');
+  const [usdPrice, setusdPrice] = useState("0.00");
   const [imageURL, setImageURL] = useState('');
   const [cid, setcid] = useState('');
   const [loadingImage, setLoadingImage] = useState(false);
   const [loadingCreate, setLoadingCreate] = useState(false);
+
+  const handleAmount = async e => {
+    setPrice(e.target.value);
+    const totalUSDValue = await getETHtoUSD(e.target.value);
+    setusdPrice(totalUSDValue);
+  }
+
+  const getETHtoUSD = async ETHvalue => {
+    const usdValue = await contract.methods
+      .getThePrice()
+      .call();
+
+    let totalUSDValue = (usdValue * ETHvalue) / 100000000;
+    totalUSDValue = Number.parseFloat(totalUSDValue).toFixed(2);
+    return totalUSDValue;
+  }
 
   const uploadFileToSlate = async event => {
     try{
@@ -67,12 +84,18 @@ function CertificateForm({ walletAddress, contract }) {
           <Form>
             <Form.Group widths='equal'>
               <Form.Field>
-                <label>Upload Certificate Template (PNG only)</label>
+                <label>Upload Certificate Border (PNG only)</label>
                 <input type="file" onChange={uploadFileToSlate}/>
               </Form.Field>
               <Form.Field>
                 <label>Price (ETH)</label>
-                <input value={price} onChange={(e) => setPrice(e.target.value)} />
+                <Input
+                  value={price}
+                  onChange={handleAmount}
+                  icon='ethereum'
+                  iconPosition='left'
+                  label={{ tag: true, content: `$${usdPrice}`}}
+                  labelPosition='right' />
               </Form.Field>
             </Form.Group>
 

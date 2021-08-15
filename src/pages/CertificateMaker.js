@@ -11,6 +11,7 @@ function CertificateMaker({ walletAddress, contract }) {
   const [title, setTitle] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
+  const [usdPrice, setusdPrice] = useState("0.00");
   const [recipient, setRecipient] = useState('');
   const [statusText, setStatusText] = useState('');
   const [transactionHash, setTransactionHash] = useState('');
@@ -22,6 +23,14 @@ function CertificateMaker({ walletAddress, contract }) {
       const res = await contract.methods.certificateTemplateList(cid).call();
       console.log(res);
       setPrice(res.price);
+
+      const usdValue = await contract.methods
+        .getThePrice()
+        .call();
+
+      let totalUSDValue = (usdValue * res.price / 10 ** 18) / 100000000;
+      totalUSDValue = Number.parseFloat(totalUSDValue).toFixed(2);
+      setusdPrice(totalUSDValue);
     }
     
     if(contract) loadDataFromNFT();
@@ -98,7 +107,9 @@ function CertificateMaker({ walletAddress, contract }) {
                   
                   {contract 
                     ? <>
-                        <p className="red-text">Price: {window.web3.utils.fromWei(price.toString(), 'Ether')} ETH</p>
+                        <p className="red-text">
+                          Price: {window.web3.utils.fromWei(price.toString(), 'Ether')} ETH (${usdPrice})
+                        </p>
                         <Button
                           type='submit'
                           color="black"

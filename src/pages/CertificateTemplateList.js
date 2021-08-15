@@ -50,7 +50,7 @@ function CertificateTemplateList() {
 
   return (
     <Container>
-      <h1>Choose certificate template</h1>
+      <h1>Choose Certificate Border</h1>
       {showUnlockBtn && <Button color="purple" onClick={unlock} size="large">
         Unlock Template
       </Button>}

@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@openzeppelin/contracts": "^3.4.0",
+    "@chainlink/contracts": "^0.1.6",
     "@truffle/hdwallet-provider": "^1.4.3",
     "nodemon": "^2.0.9"
   },
