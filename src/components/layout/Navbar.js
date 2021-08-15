@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Segment, Menu, Button } from 'semantic-ui-react';
+import { Container, Segment, Menu, Button } from 'semantic-ui-react';
 import Web3 from 'web3';
 
 import CertificateMaker from '../../abis/CertificateMaker.json';
@@ -55,55 +55,57 @@ function Navbar({ walletAddress, setWalletAddress, setContract }) {
 
   return (
     <Segment color='purple' inverted>
-      <Menu inverted secondary>
-        <Menu.Item
-          as={Link}
-          to='/'
-          name='Certificate Maker'
-          onClick={() => setActiveItem('Home')}
-        >
-          <img src={Logo} style={{ width: '8rem' }} alt="Logo" />
-        </Menu.Item>
-        <Menu.Item
-          as={Link}
-          to='/'
-          name='Home'
-          active={activeItem === 'Home'}
-          onClick={() => setActiveItem('Home')}
-        />
-        <Menu.Item
-          as={Link}
-          to='/add-certificate'
-          name='Add Certificate Border'
-          active={activeItem === 'Add Certificate Border'}
-          onClick={() => setActiveItem('Add Certificate Border')}
-        />
-        {walletAddress
-          && <Menu.Item
-              as={Link}
-              to='/user-certificates'
-              name='Your Certificates'
-              active={activeItem === 'Your Certificates'}
-              onClick={() => setActiveItem('Your Certificates')}
-            />
-        }
-        {walletAddress ? (
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <p>{walletAddress.substring(0,8)}...{walletAddress.substring(34,42)}</p>
-            </Menu.Item>
-            <Menu.Item>
-              <Button color="red" onClick={logout}>Disconnect</Button>
-            </Menu.Item>
-          </Menu.Menu>
-        ) : (
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <Button color='green' onClick={connectToBlockchain}>Open Wallet</Button>
-            </Menu.Item>
-          </Menu.Menu>
-        )}
-      </Menu>
+      <Container>
+        <Menu inverted secondary>
+          <Menu.Item
+            as={Link}
+            to='/'
+            name='Certificate Maker'
+            onClick={() => setActiveItem('Home')}
+          >
+            <img src={Logo} style={{ width: '8rem' }} alt="Logo" />
+          </Menu.Item>
+          <Menu.Item
+            as={Link}
+            to='/'
+            name='Home'
+            active={activeItem === 'Home'}
+            onClick={() => setActiveItem('Home')}
+          />
+          <Menu.Item
+            as={Link}
+            to='/add-certificate'
+            name='Add Certificate Border'
+            active={activeItem === 'Add Certificate Border'}
+            onClick={() => setActiveItem('Add Certificate Border')}
+          />
+          {walletAddress
+            && <Menu.Item
+                as={Link}
+                to='/user-certificates'
+                name='Your Certificates'
+                active={activeItem === 'Your Certificates'}
+                onClick={() => setActiveItem('Your Certificates')}
+              />
+          }
+          {walletAddress ? (
+            <Menu.Menu position='right'>
+              <Menu.Item>
+                <p>{walletAddress.substring(0,8)}...{walletAddress.substring(34,42)}</p>
+              </Menu.Item>
+              <Menu.Item>
+                <Button color="red" onClick={logout}>Disconnect</Button>
+              </Menu.Item>
+            </Menu.Menu>
+          ) : (
+            <Menu.Menu position='right'>
+              <Menu.Item>
+                <Button color='green' onClick={connectToBlockchain}>Open Wallet</Button>
+              </Menu.Item>
+            </Menu.Menu>
+          )}
+        </Menu>
+      </Container>
     </Segment>
 
   );

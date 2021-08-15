@@ -81,7 +81,7 @@ function CertificateMaker({ walletAddress, contract }) {
       <Grid divided='vertically'>
         <Grid.Row>
           <Grid.Column mobile={16} tablet={9} computer={9}>
-            <Image className="certificatemaker" src={`https://slate.textile.io/ipfs/${cid}`} />
+            <Image className="certificatemaker" src={`https://slate.textile.io/ipfs/${cid}`} fluid />
             <p className="certificatemaker__onTop certificatemaker__infor">
               {title}
             </p><p className="certificatemaker__onTop certificatemaker__name">
