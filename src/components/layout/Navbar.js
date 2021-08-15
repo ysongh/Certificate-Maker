@@ -78,6 +78,15 @@ function Navbar({ walletAddress, setWalletAddress, setContract }) {
           active={activeItem === 'Add Certificate Border'}
           onClick={() => setActiveItem('Add Certificate Border')}
         />
+        {walletAddress
+          && <Menu.Item
+              as={Link}
+              to='/user-certificates'
+              name='Your Certificates'
+              active={activeItem === 'Your Certificates'}
+              onClick={() => setActiveItem('Your Certificates')}
+            />
+        }
         {walletAddress ? (
           <Menu.Menu position='right'>
             <Menu.Item>

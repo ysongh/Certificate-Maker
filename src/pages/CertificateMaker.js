@@ -64,7 +64,7 @@ function CertificateMaker({ walletAddress, contract }) {
       console.log(json);
 
       const res = await contract.methods
-        .mintCertificateNFT(cid, recipient)
+        .mintCertificateNFT(json.cid, recipient)
         .send({ from: walletAddress });
       console.log('createCertificateTemplate', res);
       setTransactionHash(res.transactionHash);

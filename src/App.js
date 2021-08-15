@@ -5,6 +5,7 @@ import Navbar from './components/layout/Navbar';
 import CertificateTemplateList from './pages/CertificateTemplateList';
 import CertificateForm from './pages/CertificateForm';
 import CertificateMaker from './pages/CertificateMaker';
+import UserCertificates from './pages/UserCertificates';
 import './App.css';
 
 function App() {
@@ -18,6 +19,11 @@ function App() {
         setWalletAddress={setWalletAddress}
         setContract={setContract} />
       <Switch>
+        <Route path="/user-certificates">
+          <UserCertificates
+            walletAddress={walletAddress}
+            contract={contract} />
+        </Route>
         <Route path="/add-certificate">
           <CertificateForm
             walletAddress={walletAddress}
