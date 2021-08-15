@@ -4,6 +4,7 @@ import { Segment, Menu, Button } from 'semantic-ui-react';
 import Web3 from 'web3';
 
 import CertificateMaker from '../../abis/CertificateMaker.json';
+import Logo from '../../logo.svg';
 
 function Navbar({ walletAddress, setWalletAddress, setContract }) {
   const [activeItem, setActiveItem] = useState('Home');
@@ -60,7 +61,9 @@ function Navbar({ walletAddress, setWalletAddress, setContract }) {
           to='/'
           name='Certificate Maker'
           onClick={() => setActiveItem('Home')}
-        />
+        >
+          <img src={Logo} style={{ width: '8rem' }} alt="Logo" />
+        </Menu.Item>
         <Menu.Item
           as={Link}
           to='/'
