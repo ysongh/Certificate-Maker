@@ -9,6 +9,10 @@ A dapp where users can use certificate template to create certificate and upload
 - Designers can earn cryptos when someone used their certificate borders to mint NFT of certificates.
 - User will need to purchase membership to see all certificate borders.
 
+## Links to example use of IPFS
+- (slate.host) <https://github.com/ysongh/Certificate-Maker/blob/master/src/pages/CertificateForm.js#L35>
+- (nft.storage) <https://github.com/ysongh/Certificate-Maker/blob/master/server/pdf.js#L79>
+
 ## Technologies
 - React
 - semantic-ui
