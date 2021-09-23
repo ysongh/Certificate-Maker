@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Grid, Card, Image, Button } from 'semantic-ui-react';
+import { Container, Grid, Card, Image, Message, Button } from 'semantic-ui-react';
 
 import { SLATEAPIKEY, CERTIFICATETEMPLATE_COLLECTIONID } from '../config';
 
@@ -20,6 +20,7 @@ const FREECERTIFICATETEMPLATES = [
 function CertificateTemplateList() {
   const [certificateTemplates, setCertificateTemplates] = useState(FREECERTIFICATETEMPLATES);
   const [showUnlockBtn, setShowUnlockBtn] = useState(true);
+  const [showMessage, setShowMessage] = useState(true);
 
   useEffect(() => {
     window.addEventListener('unlockProtocol.status', function(event) {
@@ -63,6 +64,10 @@ function CertificateTemplateList() {
 
   return (
     <Container>
+      {showMessage && <Message
+        onDismiss={() => setShowMessage(false)}
+        header='Contract is deployed on Polygon Test Network'
+      />}
       <h1>Choose Certificate Border</h1>
       <Grid columns={3} doubling>
         <Grid.Row>

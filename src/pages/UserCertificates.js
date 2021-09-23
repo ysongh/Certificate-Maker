@@ -21,7 +21,7 @@ function UserCertificates({ walletAddress, contract }) {
       
     }
     if(contract) loadNFTs();
-  }, [walletAddress, contract])
+  }, [walletAddress, contract, certificateURLs])
   console.log(certificateURLs)
   return (
     <Container>
