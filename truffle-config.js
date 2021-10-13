@@ -17,6 +17,14 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true
     },
+    // truffle migrate --network rinkeby
+    rinkeby: {
+      provider: () => new HDWalletProvider(mnemonic, `https://eth-rinkeby.gateway.pokt.network/v1/lb/${process.env.POKT_NETWORK_KEY}`),
+      network_id: 4,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
   },
   contracts_build_directory: './src/abis/',
   compilers: {
