@@ -1,4 +1,4 @@
-# Certificate Maker
+# Certificate Maker NFT
 A dapp where users can use certificate template to create certificate and upload it to IPFS
 
 ## Features
