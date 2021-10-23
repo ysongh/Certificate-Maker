@@ -19,7 +19,7 @@ module.exports = {
     },
     // truffle migrate --network rinkeby
     rinkeby: {
-      provider: () => new HDWalletProvider(mnemonic, `https://eth-rinkeby.gateway.pokt.network/v1/lb/${process.env.POKT_NETWORK_KEY}`),
+      provider: () => new HDWalletProvider(mnemonic, `https://eth-rinkeby.alchemyapi.io/v2/${process.env.ALCHEMYAPI_KEY}`),
       network_id: 4,
       confirmations: 2,
       timeoutBlocks: 200,

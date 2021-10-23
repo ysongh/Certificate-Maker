@@ -30,13 +30,14 @@ A dapp where users can use certificate template to create certificate and upload
 - Run `truffle migrate` to deploy the contract
 - Create a file called 'config.js' on the src folder and add the following code
 ```
-export const SLATEAPIKEY = "<Create API key from slate.host>";
+export const SLATEAPIKEY = "< Create API key from slate.host >";
 export const CERTIFICATETEMPLATE_COLLECTIONID = "<Get Collection ID from slate.host>";
 export const SERVER_URL = "http://localhost:4000/";
 ```
 - Create a file called '.env' on the root folder and add the following code
 ```
-NFTSTORAGE_APIKEY =  "<Create API key from nft.storage>";
+NFTSTORAGE_APIKEY =  "< Create API key from nft.storage >";
 MNEMONIC=< Your mnemonic >
+ALCHEMYAPI_KEY = < Your Alchemy API key >
 ```
 - Run `npm start` to start the dapp
