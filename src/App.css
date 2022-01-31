@@ -31,3 +31,7 @@
     transform: translate(-50%, -50%);
     font-size: 2rem;
 }
+
+.ui.segment {
+    padding: 0 !important;
+}
