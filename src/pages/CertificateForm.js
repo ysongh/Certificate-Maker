@@ -23,13 +23,17 @@ function CertificateForm({ walletAddress, contract }) {
   }
 
   const getETHtoUSD = async ETHvalue => {
-    const usdValue = await contract.methods
-      .getThePrice()
-      .call();
+    if(walletAddress){
+      const usdValue = await contract.methods
+        .getThePrice()
+        .call();
 
-    let totalUSDValue = (usdValue * ETHvalue) / 100000000;
-    totalUSDValue = Number.parseFloat(totalUSDValue).toFixed(2);
-    return totalUSDValue;
+      let totalUSDValue = (usdValue * ETHvalue) / 100000000;
+      totalUSDValue = Number.parseFloat(totalUSDValue).toFixed(2);
+      return totalUSDValue;
+    }
+    
+    return 0;
   }
 
   const uploadFileToSlate = async event => {
