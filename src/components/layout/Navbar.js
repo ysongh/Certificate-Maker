@@ -4,28 +4,26 @@ import { Container, Segment, Menu, Button } from 'semantic-ui-react';
 import Web3 from 'web3';
 
 import CertificateMaker from '../../abis/CertificateMaker.json';
+import { web3modal } from '../Web3modal';
 import Logo from '../../logo.svg';
 
 function Navbar({ walletAddress, setWalletAddress, setContract }) {
   const [activeItem, setActiveItem] = useState('Home');
 
   const connectToBlockchain = async () => {
-    await loadWeb3();
-    await loadBlockchainData();
+    try{
+      await loadWeb3();
+      await loadBlockchainData();
+    } catch(error) {
+      console.error(error);
+    }
   }
 
   const loadWeb3 = async () => {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
+    const provider = await web3modal.connect();
+    window.web3 = new Web3(provider);
 
-      await window.ethereum.enable();
-    }
-    else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-    }
-    else {
-      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
-    }
+    await window.ethereum.enable();
   }
 
   const loadBlockchainData = async () => {
