@@ -2,19 +2,46 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Segment, Menu, Button } from 'semantic-ui-react';
 import Web3 from 'web3';
+import UAuth from '@uauth/js';
 
 import CertificateMaker from '../../abis/CertificateMaker.json';
 import { web3modal } from '../Web3modal';
 import Logo from '../../logo.svg';
+import {
+  UNSTOPPABLEDOMAINS_CLIENTID,
+  UNSTOPPABLEDOMAINS_CLIENTSECRET,
+  UNSTOPPABLEDOMAINS_REDIRECT_URI,
+  UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI
+} from '../../config';
+
+const uauth = new UAuth({
+  clientID: UNSTOPPABLEDOMAINS_CLIENTID,
+  clientSecret: UNSTOPPABLEDOMAINS_CLIENTSECRET,
+  scope: 'openid email wallet',
+  redirectUri: UNSTOPPABLEDOMAINS_REDIRECT_URI,
+  postLogoutRedirectUri: UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI,
+})
 
 function Navbar({ walletAddress, setWalletAddress, setContract }) {
   const [activeItem, setActiveItem] = useState('Home');
+  const [udName, setUDName] = useState('');
 
   const connectToBlockchain = async () => {
     try{
       await loadWeb3();
       await loadBlockchainData();
     } catch(error) {
+      console.error(error);
+    }
+  }
+
+  const loginWithUnstoppableDomains = async () => {
+    try {
+      const authorization = await uauth.loginWithPopup();
+   
+      console.log(authorization);
+      setUDName(authorization.idToken.sub);
+    } catch (error) {
       console.error(error);
     }
   }
@@ -95,8 +122,17 @@ function Navbar({ walletAddress, setWalletAddress, setContract }) {
                 <Button color="red" onClick={logout}>Disconnect</Button>
               </Menu.Item>
             </Menu.Menu>
+          ) : udName ? (
+            <Menu.Menu position='right'>
+              <Menu.Item>
+                <p>{udName}</p>
+              </Menu.Item>
+            </Menu.Menu>
           ) : (
             <Menu.Menu position='right'>
+              <Menu.Item>
+                <Button color='blue' onClick={loginWithUnstoppableDomains}>Login with UD</Button>
+              </Menu.Item>
               <Menu.Item>
                 <Button color='green' onClick={connectToBlockchain}>Open Wallet</Button>
               </Menu.Item>
