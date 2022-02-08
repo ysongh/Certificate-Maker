@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
+import Home from './pages/Home';
 import CertificateTemplateList from './pages/CertificateTemplateList';
 import CertificateForm from './pages/CertificateForm';
 import CertificateMaker from './pages/CertificateMaker';
@@ -20,7 +21,7 @@ function App() {
         setWalletAddress={setWalletAddress}
         setContract={setContract} />
       <div style={{ minHeight: '77vh' }}>
-        <Switch>
+        <Switch>Home
           <Route path="/user-certificates">
             <UserCertificates
               walletAddress={walletAddress}
@@ -36,8 +37,11 @@ function App() {
               walletAddress={walletAddress}
               contract={contract} />
           </Route>
-          <Route path="/">
+          <Route path="/certificate-template-list">
             <CertificateTemplateList />
+          </Route>
+          <Route path="/">
+            <Home />
           </Route>
         </Switch>
       </div>
