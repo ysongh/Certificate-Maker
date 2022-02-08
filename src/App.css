@@ -35,3 +35,12 @@
 .ui.segment {
     padding: 0 !important;
 }
+
+.ud-btn {
+    cursor: pointer;
+    width: 300px;
+}
+
+.ud-btn:hover {
+    filter: brightness(90%);
+}

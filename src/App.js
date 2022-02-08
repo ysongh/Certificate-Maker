@@ -12,16 +12,18 @@ import './App.css';
 
 function App() {
   const [walletAddress, setWalletAddress] = useState('');
+  const [udName, setUDName] = useState('');
   const [contract, setContract] = useState(null);
 
   return (
     <Router className="App">
       <Navbar
         walletAddress={walletAddress}
+        udName={udName}
         setWalletAddress={setWalletAddress}
         setContract={setContract} />
       <div style={{ minHeight: '77vh' }}>
-        <Switch>Home
+        <Switch>
           <Route path="/user-certificates">
             <UserCertificates
               walletAddress={walletAddress}
@@ -41,7 +43,7 @@ function App() {
             <CertificateTemplateList />
           </Route>
           <Route path="/">
-            <Home />
+            <Home setUDName={setUDName} />
           </Route>
         </Switch>
       </div>
