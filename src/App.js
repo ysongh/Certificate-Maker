@@ -17,29 +17,45 @@ function App() {
 
   return (
     <Router className="App">
-      <Navbar
-        walletAddress={walletAddress}
-        udName={udName}
-        setWalletAddress={setWalletAddress}
-        setContract={setContract} />
+      
       <div style={{ minHeight: '77vh' }}>
         <Switch>
           <Route path="/user-certificates">
+            <Navbar
+              walletAddress={walletAddress}
+              udName={udName}
+              setWalletAddress={setWalletAddress}
+              setContract={setContract} />
             <UserCertificates
               walletAddress={walletAddress}
               contract={contract} />
           </Route>
           <Route path="/add-certificate">
+            <Navbar
+              walletAddress={walletAddress}
+              udName={udName}
+              setWalletAddress={setWalletAddress}
+              setContract={setContract} />
             <CertificateForm
               walletAddress={walletAddress}
               contract={contract} />
           </Route>
           <Route path="/certificate-maker/:cid">
+            <Navbar
+              walletAddress={walletAddress}
+              udName={udName}
+              setWalletAddress={setWalletAddress}
+              setContract={setContract} />
             <CertificateMaker
               walletAddress={walletAddress}
               contract={contract} />
           </Route>
           <Route path="/certificate-template-list">
+            <Navbar
+              walletAddress={walletAddress}
+              udName={udName}
+              setWalletAddress={setWalletAddress}
+              setContract={setContract} />
             <CertificateTemplateList />
           </Route>
           <Route path="/">

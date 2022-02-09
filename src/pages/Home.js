@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Header } from 'semantic-ui-react';
 import UAuth from '@uauth/js';
 
 import UDbtn from '../assets/ud-default-button.png';
@@ -31,9 +31,12 @@ function Home({ setUDName }) {
   }
 
   return <div className="hero-img">
-    <Container>
-      <h1>Create your own digital certificate</h1>
-      <p>Send your digital certificate as NFT</p>
+    <Container className="hero-content">
+      <Header style={{ paddingTop: "12rem" }} as='h1'>
+        Send your Digital Certificate as NFT
+      </Header>
+      <p>Chose a certificate border created by designers</p>
+      <br />
       <img className="ud-btn" src={UDbtn} onClick={loginWithUnstoppableDomains} />
     </Container>
   </div>;

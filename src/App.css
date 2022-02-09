@@ -8,6 +8,18 @@
     font-size: 1.4rem;
 }
 
+.hero-img{
+    background-image: url("https://siasky.net/AABpkPqZQ_HCjzUTbEuLXvjVVrcP5kuRTgQlCkIItGMZ-g");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 97vh;
+}
+
+.hero-content > p {
+    font-size: 1.2rem;
+}
+  
 .certificatemaker {
     position: relative;
 }
