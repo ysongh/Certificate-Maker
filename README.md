@@ -1,6 +1,23 @@
 # Certificate Maker NFT
 A dapp where users can use certificate template to create certificate and upload it to IPFS
 
+## Info
+
+### Project name
+Certificate Maker NFT
+
+### Working code in a public repo or PR to a public repo
+https://github.com/ysongh/Certificate-Maker/tree/unstoppabledomains
+
+### Recorded video demo of the integration (max. 3 mins)
+https://youtu.be/8rVDe0ztf7Q
+
+### Discord ID
+You Song#4593
+
+### UnstoppableDomain registered account email address
+ysongweb3@gmail.com
+
 ## Features
 - Users can create certificates and upload it to IPFS
 - User can use certificate borders that are created by designers
