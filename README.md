@@ -8,6 +8,7 @@ A dapp where users can use certificate template to create certificate and upload
 - Developers can see a list of bounties and choose which bounties to work on.
 - Designers can earn cryptos when someone used their certificate borders to mint NFT of certificates.
 - User will need to purchase membership to see all certificate borders.
+- User can login with Unstoppable Domain
 
 ## Technologies
 - React
@@ -18,6 +19,7 @@ A dapp where users can use certificate template to create certificate and upload
 - Polygon (Deploy the contract on Polygon Testnet for cheap gas fee)
 - Chainlink (Price Feed)
 - Unlock (Using Unlock's Paywall to get user to pay membership to access all certificate templates)
+- Unstoppable Domains Login
 
 ## Running the dapp on local host
 - Clone or download this repository
@@ -29,6 +31,10 @@ A dapp where users can use certificate template to create certificate and upload
 export const SLATEAPIKEY = "< Create API key from slate.host >";
 export const CERTIFICATETEMPLATE_COLLECTIONID = "<Get Collection ID from slate.host>";
 export const SERVER_URL = "http://localhost:4000/";
+export const UNSTOPPABLEDOMAINS_CLIENTID = "< Your Unstoppable Domains Client Id >";
+export const UNSTOPPABLEDOMAINS_CLIENTSECRET = "< Your Unstoppable Domains Client Secret >";
+export const UNSTOPPABLEDOMAINS_REDIRECT_URI = "< Your Unstoppable Domains Redirect URL >";
+export const UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI = "< Your Unstoppable Domains Logout Redirect URL >";
 ```
 - Create a file called '.env' on the root folder and add the following code
 ```
