@@ -17,7 +17,7 @@ function App() {
 
   return (
     <Router className="App">
-      <div style={{ minHeight: '77vh' }}>
+      <div style={{ minHeight: '88vh' }}>
         <Switch>
           <Route path="/user-certificates">
             <Navbar

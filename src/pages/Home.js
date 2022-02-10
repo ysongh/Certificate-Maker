@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { Container, Header } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import UAuth from '@uauth/js';
 
 import UDbtn from '../assets/ud-default-button.png';
@@ -35,10 +35,13 @@ function Home({ setUDName }) {
   }
 
   return <div className="hero-img">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+  <path fill="#9640C1" fill-opacity="1" d="M0,64L48,74.7C96,85,192,107,288,101.3C384,96,480,64,576,53.3C672,43,768,53,864,90.7C960,128,1056,192,1152,192C1248,192,1344,128,1392,96L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+</svg>
     <Container className="hero-content">
-      <Header style={{ paddingTop: "12rem" }} as='h1'>
+      <h1>
         Send your Digital Certificate as NFT
-      </Header>
+      </h1>
       <p>Chose a certificate border created by designers</p>
       <br />
       <img className="ud-btn" src={UDbtn} onClick={loginWithUnstoppableDomains} />

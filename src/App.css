@@ -16,6 +16,12 @@
     height: 97vh;
 }
 
+.hero-content > h1 {
+    font-size: 2.5rem;
+    color: #9640C1;
+    font-weight: bold;
+}
+
 .hero-content > p {
     font-size: 1.2rem;
 }
