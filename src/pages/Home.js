@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { Container, Header } from 'semantic-ui-react';
 import UAuth from '@uauth/js';
 
@@ -19,12 +20,15 @@ const uauth = new UAuth({
 })
 
 function Home({ setUDName }) {
+  const history = useHistory();
+
   const loginWithUnstoppableDomains = async () => {
     try {
       const authorization = await uauth.loginWithPopup();
    
       console.log(authorization);
       setUDName(authorization.idToken.sub);
+      history.push('/certificate-template-list');
     } catch (error) {
       console.error(error);
     }

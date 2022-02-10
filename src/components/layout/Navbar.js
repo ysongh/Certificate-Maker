@@ -73,7 +73,7 @@ function Navbar({ walletAddress, udName, setWalletAddress, setContract }) {
           <Menu.Item
             as={Link}
             to='/certificate-template-list'
-            name='List'
+            name='Template List'
             active={activeItem === 'List'}
             onClick={() => setActiveItem('List')}
           />

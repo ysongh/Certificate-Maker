@@ -17,7 +17,6 @@ function App() {
 
   return (
     <Router className="App">
-      
       <div style={{ minHeight: '77vh' }}>
         <Switch>
           <Route path="/user-certificates">
