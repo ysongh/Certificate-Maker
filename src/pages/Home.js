@@ -1,7 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { Container } from 'semantic-ui-react';
+import { Container, Button } from 'semantic-ui-react';
 import UAuth from '@uauth/js';
+import Web3 from 'web3';
 
 import UDbtn from '../assets/ud-default-button.png';
 import {
@@ -10,6 +11,8 @@ import {
   UNSTOPPABLEDOMAINS_REDIRECT_URI,
   UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI
 } from '../config';
+import CertificateMaker from '../abis/CertificateMaker.json';
+import { web3modal } from '../components/Web3modal';
 
 const uauth = new UAuth({
   clientID: UNSTOPPABLEDOMAINS_CLIENTID,
@@ -19,8 +22,45 @@ const uauth = new UAuth({
   postLogoutRedirectUri: UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI,
 })
 
-function Home({ setUDName }) {
+function Home({ setUDName, setWalletAddress, setContract }) {
   const history = useHistory();
+
+  const connectToBlockchain = async () => {
+    try{
+      await loadWeb3();
+      await loadBlockchainData();
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  const loadWeb3 = async () => {
+    const provider = await web3modal.connect();
+    window.web3 = new Web3(provider);
+
+    await window.ethereum.enable();
+  }
+
+  const loadBlockchainData = async () => {
+    const web3 = window.web3;
+
+    const accounts = await web3.eth.getAccounts();
+    setWalletAddress(accounts[0]);
+
+    const networkId = await web3.eth.net.getId();
+    const networkData = CertificateMaker.networks[networkId];
+
+    if(networkData){
+      const abi = CertificateMaker.abi;
+      const address = CertificateMaker.networks[networkId].address;
+
+      const data = new web3.eth.Contract(abi, address);
+      setContract(data);
+      history.push('/certificate-template-list');
+    }else{
+      window.alert('Contract is not deployed to detected network')
+    }
+  }
 
   const loginWithUnstoppableDomains = async () => {
     try {
@@ -28,7 +68,7 @@ function Home({ setUDName }) {
    
       console.log(authorization);
       setUDName(authorization.idToken.sub);
-      history.push('/certificate-template-list');
+      loadBlockchainData();
     } catch (error) {
       console.error(error);
     }
@@ -45,6 +85,8 @@ function Home({ setUDName }) {
       <p>Chose a certificate border created by designers</p>
       <br />
       <img className="ud-btn" src={UDbtn} onClick={loginWithUnstoppableDomains} />
+      <br />
+      <Button className="ud-btn" color='green' onClick={connectToBlockchain}>Login with Metamask</Button>
     </Container>
   </div>;
 }

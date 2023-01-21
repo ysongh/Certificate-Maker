@@ -22,9 +22,7 @@ function App() {
           <Route path="/user-certificates">
             <Navbar
               walletAddress={walletAddress}
-              udName={udName}
-              setWalletAddress={setWalletAddress}
-              setContract={setContract} />
+              udName={udName} />
             <UserCertificates
               walletAddress={walletAddress}
               contract={contract} />
@@ -58,7 +56,10 @@ function App() {
             <CertificateTemplateList />
           </Route>
           <Route path="/">
-            <Home setUDName={setUDName} />
+            <Home
+              setUDName={setUDName}
+              setWalletAddress={setWalletAddress}
+              setContract={setContract} />
           </Route>
         </Switch>
       </div>

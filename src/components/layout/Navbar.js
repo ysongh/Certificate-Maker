@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { Container, Segment, Menu, Button } from 'semantic-ui-react';
-import Web3 from 'web3';
 import UAuth from '@uauth/js';
 
-import CertificateMaker from '../../abis/CertificateMaker.json';
-import { web3modal } from '../Web3modal';
 import Logo from '../../logo.svg';
 import {
   UNSTOPPABLEDOMAINS_CLIENTID,
@@ -27,42 +24,6 @@ function Navbar({ walletAddress, udName, setWalletAddress, setContract }) {
   const history = useHistory();
 
   const [activeItem, setActiveItem] = useState('Home');
-
-  const connectToBlockchain = async () => {
-    try{
-      await loadWeb3();
-      await loadBlockchainData();
-    } catch(error) {
-      console.error(error);
-    }
-  }
-
-  const loadWeb3 = async () => {
-    const provider = await web3modal.connect();
-    window.web3 = new Web3(provider);
-
-    await window.ethereum.enable();
-  }
-
-  const loadBlockchainData = async () => {
-    const web3 = window.web3;
-
-    const accounts = await web3.eth.getAccounts();
-    setWalletAddress(accounts[0]);
-
-    const networkId = await web3.eth.net.getId();
-    const networkData = CertificateMaker.networks[networkId];
-
-    if(networkData){
-      const abi = CertificateMaker.abi;
-      const address = CertificateMaker.networks[networkId].address;
-
-      const data = new web3.eth.Contract(abi, address);
-      setContract(data);
-    }else{
-      window.alert('Contract is not deployed to detected network')
-    }
-  }
 
   const logout = () => {
     setWalletAddress('');
@@ -142,7 +103,7 @@ function Navbar({ walletAddress, udName, setWalletAddress, setContract }) {
           ) : (
             <Menu.Menu position='right'>
               <Menu.Item>
-                <Button color='green' onClick={connectToBlockchain}>Open Wallet</Button>
+                {/* <Button color='green' onClick={connectToBlockchain}>Open Wallet</Button> */}
               </Menu.Item>
             </Menu.Menu>
           )}
