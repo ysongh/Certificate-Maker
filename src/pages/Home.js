@@ -16,10 +16,8 @@ import { web3modal } from '../components/Web3modal';
 
 const uauth = new UAuth({
   clientID: UNSTOPPABLEDOMAINS_CLIENTID,
-  clientSecret: UNSTOPPABLEDOMAINS_CLIENTSECRET,
-  scope: 'openid email wallet',
-  redirectUri: UNSTOPPABLEDOMAINS_REDIRECT_URI,
-  postLogoutRedirectUri: UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI,
+  scope: 'openid wallet',
+  redirectUri: UNSTOPPABLEDOMAINS_REDIRECT_URI
 })
 
 function Home({ setUDName, setWalletAddress, setContract }) {
@@ -68,7 +66,7 @@ function Home({ setUDName, setWalletAddress, setContract }) {
    
       console.log(authorization);
       setUDName(authorization.idToken.sub);
-      loadBlockchainData();
+      connectToBlockchain();
     } catch (error) {
       console.error(error);
     }

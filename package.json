@@ -6,7 +6,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@uauth/js": "^0.7.9",
+    "@uauth/js": "^2.4.0",
     "@uauth/web3modal": "^0.7.9",
     "@walletconnect/web3-provider": "^1.7.1",
     "body-parser": "^1.19.0",
@@ -27,8 +27,8 @@
     "web3modal": "^1.9.5"
   },
   "devDependencies": {
-    "@openzeppelin/contracts": "^3.4.0",
     "@chainlink/contracts": "^0.1.6",
+    "@openzeppelin/contracts": "^3.4.0",
     "@truffle/hdwallet-provider": "^1.4.3",
     "nodemon": "^2.0.9"
   },
