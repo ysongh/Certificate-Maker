@@ -25,11 +25,19 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true
     },
+     // truffle migrate --network hyperspace
+     hyperspace: {
+      provider: () => new HDWalletProvider(mnemonic, 'https://api.hyperspace.node.glif.io/rpc/v0'),
+      network_id: 3141,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
   },
   contracts_build_directory: './src/abis/',
   compilers: {
     solc: {
-      version: "0.6.12",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.5",    // Fetch exact version from solc-bin (default: truffle's version)
     },
   },
 };
