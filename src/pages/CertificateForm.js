@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Container, Card, Form, Input, Image, Button } from 'semantic-ui-react';
+import axios from "axios";
 
-import { SLATEAPIKEY, CERTIFICATETEMPLATE_COLLECTIONID } from '../config';
+import { PINATA_APIKEY, PINATA_SECRETAPIKEY } from '../config';
 import Spinner from '../components/common/Spinner';
 import PlaceholderImage from '../components/common/PlaceholderImage';
 
@@ -18,44 +19,26 @@ function CertificateForm({ walletAddress, contract }) {
 
   const handleAmount = async e => {
     setPrice(e.target.value);
-    const totalUSDValue = await getETHtoUSD(e.target.value);
-    setusdPrice(totalUSDValue);
-  }
-
-  const getETHtoUSD = async ETHvalue => {
-    if(walletAddress){
-      const usdValue = await contract.methods
-        .getThePrice()
-        .call();
-
-      let totalUSDValue = (usdValue * ETHvalue) / 100000000;
-      totalUSDValue = Number.parseFloat(totalUSDValue).toFixed(2);
-      return totalUSDValue;
-    }
-    
-    return 0;
   }
 
   const uploadFileToSlate = async event => {
     try{
       setLoadingImage(true);
       const image = event.target.files[0];
-      const url = `https://uploads.slate.host/api/public/${CERTIFICATETEMPLATE_COLLECTIONID}`;
 
       let data = new FormData();
-      data.append("data", image);
-
-      const response = await fetch(url, {
-        method: 'POST',
+      data.append('file', image);
+      const res = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", data, {
+        maxContentLength: "Infinity",
         headers: {
-          Authorization: SLATEAPIKEY,
-        },
-        body: data
-      });
-      const json = await response.json();
-      console.log(json);
-      setImageURL(`https://slate.textile.io/ipfs/${json.data.cid}`);
-      setcid(json.data.cid);
+          "Content-Type": 'multipart/form-data',
+          pinata_api_key: PINATA_APIKEY, 
+          pinata_secret_api_key: PINATA_SECRETAPIKEY,
+        }
+      })
+      let url = "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash;
+      console.log(url);
+      setImageURL(url);
       setLoadingImage(false);
     }
     catch(err) {

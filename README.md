@@ -15,9 +15,9 @@ A dapp where users can use certificate template to create certificate and upload
 - semantic-ui
 - Node.js
 - nft.storage (Store certificates and its metadata)
-- slate.host (Store certificate borders)
+- Pinata (Store certificate borders)
 - Polygon (Deploy the contract on Polygon Testnet for cheap gas fee)
-- Chainlink (Price Feed)
+- Filecoin Testnet (Deploy the contract on Hyperspace Testnet for cheap gas fee)
 - Unlock (Using Unlock's Paywall to get user to pay membership to access all certificate templates)
 - Unstoppable Domains Login
 
@@ -28,8 +28,8 @@ A dapp where users can use certificate template to create certificate and upload
 - Run `truffle migrate` to deploy the contract
 - Create a file called 'config.js' on the src folder and add the following code
 ```
-export const SLATEAPIKEY = "< Create API key from slate.host >";
-export const CERTIFICATETEMPLATE_COLLECTIONID = "<Get Collection ID from slate.host>";
+export const PINATA_APIKEY = "< Create API key from Pinata >";
+export const PINATA_SECRETAPIKEY = "< Create API key from Pinata >";
 export const SERVER_URL = "http://localhost:4000/";
 export const UNSTOPPABLEDOMAINS_CLIENTID = "< Your Unstoppable Domains Client Id >";
 export const UNSTOPPABLEDOMAINS_CLIENTSECRET = "< Your Unstoppable Domains Client Secret >";
