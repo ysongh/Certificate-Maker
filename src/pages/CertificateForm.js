@@ -80,9 +80,7 @@ function CertificateForm({ walletAddress, contract }) {
                   value={price}
                   onChange={handleAmount}
                   icon='ethereum'
-                  iconPosition='left'
-                  label={{ tag: true, content: `$${usdPrice}`}}
-                  labelPosition='right' />
+                  iconPosition='left' />
               </Form.Field>
             </Form.Group>
 
