@@ -28,6 +28,7 @@ function Navbar({ walletAddress, udName, setWalletAddress, setContract }) {
   const logout = () => {
     setWalletAddress('');
     setContract(null);
+    history.push('/');
   }
 
   const logoutFromUnstoppableDomains = async () => {

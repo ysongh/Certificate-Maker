@@ -55,7 +55,7 @@ function CertificateForm({ walletAddress, contract }) {
         .send({ from: walletAddress });
       console.log('mintCertificateTemplateNFT', res);
 
-      history.push('/');
+      history.push('/certificate-template-list');
       setLoadingCreate(false);
     }
     catch(err) {
