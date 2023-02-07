@@ -66,7 +66,7 @@ function CertificateTemplateList() {
     <Container>
       {showMessage && <Message
         onDismiss={() => setShowMessage(false)}
-        header='Contract is deployed on Rinkeby Test Network'
+        header='Contract is deployed on Filecoin Hyperspace Test Network'
       />}
       <h1>Choose Certificate Border</h1>
       <Grid columns={3} doubling>

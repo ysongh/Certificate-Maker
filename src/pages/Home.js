@@ -7,9 +7,7 @@ import Web3 from 'web3';
 import UDbtn from '../assets/ud-default-button.png';
 import {
   UNSTOPPABLEDOMAINS_CLIENTID,
-  UNSTOPPABLEDOMAINS_CLIENTSECRET,
-  UNSTOPPABLEDOMAINS_REDIRECT_URI,
-  UNSTOPPABLEDOMAINS_LOGOUT_REDIRECT_URI
+  UNSTOPPABLEDOMAINS_REDIRECT_URI
 } from '../config';
 import CertificateMaker from '../abis/CertificateMaker.json';
 import { web3modal } from '../components/Web3modal';
@@ -82,7 +80,7 @@ function Home({ setUDName, setWalletAddress, setContract }) {
       </h1>
       <p>Chose a certificate border created by designers</p>
       <br />
-      <img className="ud-btn" src={UDbtn} onClick={loginWithUnstoppableDomains} />
+      <img className="ud-btn" src={UDbtn} onClick={loginWithUnstoppableDomains} alt="UD Logo" />
       <br />
       <Button className="ud-btn" color='green' onClick={connectToBlockchain}>Login with Metamask</Button>
     </Container>
