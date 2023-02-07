@@ -19,47 +19,37 @@ const FREECERTIFICATETEMPLATES = [
 
 function CertificateTemplateList() {
   const [certificateTemplates, setCertificateTemplates] = useState(FREECERTIFICATETEMPLATES);
-  const [showUnlockBtn, setShowUnlockBtn] = useState(true);
   const [showMessage, setShowMessage] = useState(true);
 
   useEffect(() => {
-    window.addEventListener('unlockProtocol.status', function(event) {
-      if(event.detail.state === "unlocked"){
-        loadWorks();
-        setShowUnlockBtn(false);
-      }
-    })
-    
-    const loadWorks = async () => {
-      const response = await fetch('https://slate.host/api/v2/get-collection', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: SLATEAPIKEY,
-        },
-        body: JSON.stringify({ data: {
-          id: CERTIFICATETEMPLATE_COLLECTIONID // collection ID
-        }})
-      });
-
-      if (!response) {
-        console.log("No response");
-        return;
-      }
-
-      const json = await response.json();
-      if (json.error) {
-        console.log(json);
-      } else {
-        const collection = json.collection;
-        setCertificateTemplates([...FREECERTIFICATETEMPLATES, ...collection.objects]);
-        console.log(collection)
-      }
-    }
+    loadWorks();
   }, [])
 
-  const unlock = () => {
-    window.unlockProtocol && window.unlockProtocol.loadCheckoutModal();
+  const loadWorks = async () => {
+    const response = await fetch('https://slate.host/api/v2/get-collection', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: SLATEAPIKEY,
+      },
+      body: JSON.stringify({ data: {
+        id: CERTIFICATETEMPLATE_COLLECTIONID // collection ID
+      }})
+    });
+
+    if (!response) {
+      console.log("No response");
+      return;
+    }
+
+    const json = await response.json();
+    if (json.error) {
+      console.log(json);
+    } else {
+      const collection = json.collection;
+      setCertificateTemplates([...FREECERTIFICATETEMPLATES, ...collection.objects]);
+      console.log(collection)
+    }
   }
 
   return (
@@ -86,19 +76,6 @@ function CertificateTemplateList() {
               </Card>
             </Grid.Column>
           ))}
-          {showUnlockBtn && 
-            <Card color='purple'>
-              <Card.Content>
-                <Card.Header>See More Certificate Border?</Card.Header>
-                <Card.Description style={{ marginBottom: '1.5rem' }}>
-                  You will need to purchase a membership to see more Certificate Border
-                </Card.Description>
-                <Button color="purple" onClick={unlock} size="large">
-                  Unlock Template
-                </Button>
-              </Card.Content>
-            </Card>
-          }
         </Grid.Row>
       </Grid>
     </Container>
