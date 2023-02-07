@@ -7,10 +7,12 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 contract CertificateMaker is ERC721URIStorage {
   using Counters for Counters.Counter;
   Counters.Counter public _nftsid;
+  Counters.Counter public _templateCount;
 
-  mapping(string => CertificateTemplate) public certificateTemplateList;
+  mapping(uint => CertificateTemplate) public certificateTemplateList;
 
   struct CertificateTemplate {
+    uint id;
     string cid;
     uint date;
     uint price;
@@ -18,6 +20,7 @@ contract CertificateMaker is ERC721URIStorage {
   }
 
   event CertificateTemplateCreated (
+    uint id,
     string cid,
     uint date,
     uint price,
@@ -35,9 +38,12 @@ contract CertificateMaker is ERC721URIStorage {
   constructor() ERC721("Certificate Maker", "CMR") {}
 
   function createCertificateTemplate(string memory _cid, uint _price) external {
-    certificateTemplateList[_cid] = CertificateTemplate(_cid, block.timestamp, _price, msg.sender);
+    _templateCount.increment();
+    uint _templateId = _templateCount.current();
 
-    emit CertificateTemplateCreated(_cid, block.timestamp, _price, msg.sender);
+    certificateTemplateList[_templateId] = CertificateTemplate(_templateId, _cid, block.timestamp, _price, msg.sender);
+
+    emit CertificateTemplateCreated(_templateId, _cid, block.timestamp, _price, msg.sender);
   }
 
   function mintCertificateNFT(string memory _cid, address _to) external {
