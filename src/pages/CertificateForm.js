@@ -11,9 +11,7 @@ function CertificateForm({ walletAddress, contract }) {
   const history = useHistory();
 
   const [price, setPrice] = useState('');
-  const [usdPrice, setusdPrice] = useState("0.00");
   const [imageURL, setImageURL] = useState('');
-  const [cid, setcid] = useState('');
   const [loadingImage, setLoadingImage] = useState(false);
   const [loadingCreate, setLoadingCreate] = useState(false);
 
@@ -51,7 +49,7 @@ function CertificateForm({ walletAddress, contract }) {
     try{
       setLoadingCreate(true);
       const res = await contract.methods
-        .createCertificateTemplate(cid, window.web3.utils.toWei(price, 'Ether'))
+        .createCertificateTemplate(imageURL, window.web3.utils.toWei(price, 'Ether'))
         .send({ from: walletAddress });
       console.log('mintCertificateTemplateNFT', res);
 
