@@ -9,7 +9,7 @@ contract CertificateMaker is ERC721URIStorage {
   Counters.Counter public _nftsid;
   Counters.Counter public _templateCount;
 
-  mapping(uint => CertificateTemplate) public certificateTemplateList;
+  CertificateTemplate[] public certificateTemplateList;
 
   struct CertificateTemplate {
     uint id;
@@ -41,7 +41,7 @@ contract CertificateMaker is ERC721URIStorage {
     _templateCount.increment();
     uint _templateId = _templateCount.current();
 
-    certificateTemplateList[_templateId] = CertificateTemplate(_templateId, _cid, block.timestamp, _price, msg.sender);
+    certificateTemplateList.push(CertificateTemplate(_templateId, _cid, block.timestamp, _price, msg.sender));
 
     emit CertificateTemplateCreated(_templateId, _cid, block.timestamp, _price, msg.sender);
   }
@@ -54,4 +54,8 @@ contract CertificateMaker is ERC721URIStorage {
 
     emit CertificateNFTCreated(_tokenId, _cid, block.timestamp, msg.sender, _to);
   }
+
+  function getAllCertificateTemplates() external view returns (CertificateTemplate[] memory) {
+        return certificateTemplateList;
+    }
 }
