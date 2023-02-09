@@ -23,7 +23,7 @@ const uauth = new UAuth({
 function Navbar({ walletAddress, udName, setWalletAddress, setContract }) {
   const history = useHistory();
 
-  const [activeItem, setActiveItem] = useState('Home');
+  const [activeItem, setActiveItem] = useState('List');
 
   const logout = () => {
     setWalletAddress('');
