@@ -37,7 +37,7 @@ function App() {
               walletAddress={walletAddress}
               contract={contract} />
           </Route>
-          <Route path="/certificate-maker/:cid">
+          <Route path="/certificate-maker/:id">
             <Navbar
               walletAddress={walletAddress}
               udName={udName}
@@ -53,7 +53,7 @@ function App() {
               udName={udName}
               setWalletAddress={setWalletAddress}
               setContract={setContract} />
-            <CertificateTemplateList />
+            <CertificateTemplateList contract={contract} />
           </Route>
           <Route path="/">
             <Home

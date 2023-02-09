@@ -6,11 +6,12 @@ import { SERVER_URL } from '../config';
 import Spinner from '../components/common/Spinner';
 
 function CertificateMaker({ walletAddress, contract }) {
-  const { cid } = useParams();
+  const { id } = useParams();
 
   const [title, setTitle] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
+  const [templateURL, setTemplateURL] = useState("");
   const [usdPrice, setusdPrice] = useState("0.00");
   const [recipient, setRecipient] = useState('');
   const [statusText, setStatusText] = useState('');
@@ -20,43 +21,25 @@ function CertificateMaker({ walletAddress, contract }) {
 
   useEffect(() => {
     const loadDataFromNFT = async () => {
-      const res = await contract.methods.certificateTemplateList(cid).call();
-      console.log(res);
-      setPrice(res.price);
+      const template = await contract.methods.certificateTemplateList(id - 1).call();
+      console.log(template);
+      setTemplateURL(template.cid);
+      setPrice(template.price);
     }
     
     if(contract) loadDataFromNFT();
-  }, [contract, cid])
+  }, [contract, id])
 
   const createCertificateTemplate = async () => {
     try{
       setLoadingCreate(true);
       setStatusText("Creating Certificate...");
 
-      const response = await fetch(SERVER_URL + 'api/pdf', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          'image_url': `https://slate.textile.io/ipfs/${cid}`,
-          'title': title,
-          'name': name
-        })
-      });
-
-      if (!response) {
-        console.log('No response');
-        return;
-      }
-
-      const json = await response.json();
       setStatusText("Minting NFT...");
-      setCertificateURL(json.url + "/certificate.pdf");
-      console.log(json);
+      setCertificateURL(templateURL);
 
       const res = await contract.methods
-        .mintCertificateNFT(json.cid, recipient)
+        .mintCertificateNFT(templateURL, recipient)
         .send({ from: walletAddress });
       console.log('createCertificateTemplate', res);
       setTransactionHash(res.transactionHash);
@@ -73,7 +56,7 @@ function CertificateMaker({ walletAddress, contract }) {
       <Grid divided='vertically'>
         <Grid.Row>
           <Grid.Column mobile={16} tablet={9} computer={9}>
-            <Image className="certificatemaker" src={`https://slate.textile.io/ipfs/${cid}`} fluid />
+            <Image className="certificatemaker" src={templateURL} fluid />
             <p className="certificatemaker__onTop certificatemaker__infor">
               {title}
             </p><p className="certificatemaker__onTop certificatemaker__name">

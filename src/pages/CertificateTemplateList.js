@@ -17,7 +17,7 @@ const FREECERTIFICATETEMPLATES = [
   },
 ]
 
-function CertificateTemplateList() {
+function CertificateTemplateList({ contract }) {
   const [certificateTemplates, setCertificateTemplates] = useState(FREECERTIFICATETEMPLATES);
   const [showMessage, setShowMessage] = useState(true);
 
@@ -26,30 +26,10 @@ function CertificateTemplateList() {
   }, [])
 
   const loadWorks = async () => {
-    const response = await fetch('https://slate.host/api/v2/get-collection', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: SLATEAPIKEY,
-      },
-      body: JSON.stringify({ data: {
-        id: CERTIFICATETEMPLATE_COLLECTIONID // collection ID
-      }})
-    });
-
-    if (!response) {
-      console.log("No response");
-      return;
-    }
-
-    const json = await response.json();
-    if (json.error) {
-      console.log(json);
-    } else {
-      const collection = json.collection;
-      setCertificateTemplates([...FREECERTIFICATETEMPLATES, ...collection.objects]);
-      console.log(collection)
-    }
+    const templates = await contract.methods
+      .getAllCertificateTemplates()
+      .call();
+    setCertificateTemplates(templates);
   }
 
   return (
@@ -64,11 +44,11 @@ function CertificateTemplateList() {
           {certificateTemplates.map(certificate => (
             <Grid.Column key={certificate.id} style={{marginBottom: '1rem'}}>
               <Card color='purple'>
-                <Image src={`https://slate.textile.io/ipfs/${certificate.cid}`} wrapped ui={false} />
+                <Image src={certificate.cid} wrapped ui={false} />
                 <Card.Content>
-                  <Card.Header>{certificate.filename}</Card.Header>
+                  {/* <Card.Header>{certificate.filename}</Card.Header> */}
                   <div style={{marginTop: '.7rem'}}>
-                    <Button basic color='green' as={Link} to={`/certificate-maker/${certificate.cid}`}>
+                    <Button basic color='green' as={Link} to={`/certificate-maker/${certificate.id}`}>
                       View
                     </Button>
                   </div>
