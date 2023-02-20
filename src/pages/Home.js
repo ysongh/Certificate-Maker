@@ -44,6 +44,7 @@ function Home({ setUDName, setWalletAddress, setContract }) {
     setWalletAddress(accounts[0]);
 
     const networkId = await web3.eth.net.getId();
+    console.log(networkId)
     const networkData = CertificateMaker.networks[networkId];
 
     if(networkData){
@@ -54,7 +55,7 @@ function Home({ setUDName, setWalletAddress, setContract }) {
       setContract(data);
       history.push('/certificate-template-list');
     }else{
-      window.alert('Contract is not deployed to detected network')
+      window.alert('Contract is not deployed to detected network. Try Filecoin Hyperspace Test Network')
     }
   }
 

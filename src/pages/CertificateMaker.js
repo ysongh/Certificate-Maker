@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Grid, Card, Image, Form, Button } from 'semantic-ui-react';
 
-import { SERVER_URL } from '../config';
 import Spinner from '../components/common/Spinner';
 
 function CertificateMaker({ walletAddress, contract }) {
@@ -12,7 +11,6 @@ function CertificateMaker({ walletAddress, contract }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [templateURL, setTemplateURL] = useState("");
-  const [usdPrice, setusdPrice] = useState("0.00");
   const [recipient, setRecipient] = useState('');
   const [statusText, setStatusText] = useState('');
   const [transactionHash, setTransactionHash] = useState('');

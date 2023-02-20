@@ -2,23 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Grid, Card, Image, Message, Button } from 'semantic-ui-react';
 
-import { SLATEAPIKEY, CERTIFICATETEMPLATE_COLLECTIONID } from '../config';
-
-const FREECERTIFICATETEMPLATES = [
-  {
-    id: "3140e32a-ac7a-4456-ab5e-f09012a117b1",
-    filename: "Border1.png",
-    cid: "bafkreiflkoahwmhdc5finxpotxcrl74oyd6otl3qriefv3ysh7p2dph5yi"
-  },
-  {
-    id: "80bf1651-de4e-4db5-9792-8b0f92a3f449",
-    filename: "Border2.png",
-    cid: "bafkreibpztlnlwueyh3s7gd5wypuiwz7z7lrl2rlkuwvptyrejaysiygeu"
-  },
-]
-
 function CertificateTemplateList({ contract }) {
-  const [certificateTemplates, setCertificateTemplates] = useState(FREECERTIFICATETEMPLATES);
+  const [certificateTemplates, setCertificateTemplates] = useState([]);
   const [showMessage, setShowMessage] = useState(true);
 
   useEffect(() => {
