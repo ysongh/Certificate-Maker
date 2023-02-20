@@ -81,7 +81,7 @@ function CertificateMaker({ walletAddress, contract }) {
                   {contract 
                     ? <>
                         <p className="red-text">
-                          Price: {window.web3.utils.fromWei(price.toString(), 'Ether')} ETH
+                          Price: {window.web3.utils.fromWei(price.toString(), 'Ether')} FIL
                         </p>
                         <Button
                           type='submit'
