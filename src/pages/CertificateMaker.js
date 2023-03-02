@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Grid, Card, Image, Form, Button } from 'semantic-ui-react';
+import axios from "axios";
 
+import { PINATA_APIKEY, PINATA_SECRETAPIKEY } from '../config';
 import Spinner from '../components/common/Spinner';
 
 function CertificateMaker({ walletAddress, contract }) {
@@ -36,11 +38,39 @@ function CertificateMaker({ walletAddress, contract }) {
       setStatusText("Minting NFT...");
       setCertificateURL(templateURL);
 
-      const res = await contract.methods
-        .mintCertificateNFT(templateURL, recipient)
+      const dateNow = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
+      const certificateData = JSON.stringify({ 
+        to: this.to,
+        title,
+        name,
+        dateNow
+      });
+      const prepareToUpload = new File(
+        [JSON.stringify(
+          {
+            certificateData
+          },
+          null,
+          1
+      )], 'metadata.json');
+      let data = new FormData()
+      data.append('file', prepareToUpload)
+      const res = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", data, {
+        maxContentLength: "Infinity",
+        headers: {
+          "Content-Type": 'multipart/form-data',
+          pinata_api_key: PINATA_APIKEY, 
+          pinata_secret_api_key: PINATA_SECRETAPIKEY,
+        }
+      })
+      let url = "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash
+      console.log(url)
+
+      const tx = await contract.methods
+        .mintCertificateNFT(url, recipient)
         .send({ from: walletAddress });
-      console.log('createCertificateTemplate', res);
-      setTransactionHash(res.transactionHash);
+      console.log('createCertificateTemplate', tx);
+      setTransactionHash(tx.transactionHash);
       setLoadingCreate(false);
     }
     catch(err) {
