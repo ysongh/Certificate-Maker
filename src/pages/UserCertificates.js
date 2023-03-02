@@ -11,7 +11,7 @@ function UserCertificates({ walletAddress, contract }) {
     const loadNFTs = async () => {
       try{
         setLoading(true);
-        const totalSupply = await contract.methods.totalSupply().call();
+        const totalSupply = await contract.methods._nftsid().call();
 
         for(let i = 1; i <= totalSupply; i++){
           const tokenOwner = await contract.methods.ownerOf(i).call();
@@ -30,14 +30,14 @@ function UserCertificates({ walletAddress, contract }) {
       }
     }
     if(contract) loadNFTs();
-  }, [walletAddress, contract, certificateURLs])
+  }, [walletAddress, contract])
   console.log(certificateURLs)
   return (
     <Container>
       <h1>Your Certificates</h1>
       <List divided relaxed>
-          {certificateURLs.map(certificate => (
-            <List.Item>
+          {certificateURLs.map((certificate, index) => (
+            <List.Item key={index}>
               <List.Icon name='certificate' size='large' verticalAlign='middle' />
               <List.Content>
               <a href={certificate} target="_blank" rel="noopener noreferrer">
