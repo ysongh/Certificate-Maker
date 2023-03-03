@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+/// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.5;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -10,6 +10,7 @@ contract CertificateMaker is ERC721URIStorage {
   Counters.Counter public _templateCount;
 
   CertificateTemplate[] public certificateTemplateList;
+  mapping(uint => UserCertificate) public userCertificateList;
 
   struct CertificateTemplate {
     uint id;
@@ -17,6 +18,11 @@ contract CertificateMaker is ERC721URIStorage {
     uint date;
     uint price;
     address from;
+  }
+
+  struct UserCertificate {
+    uint id;
+    string cid;
   }
 
   event CertificateTemplateCreated (
@@ -47,15 +53,18 @@ contract CertificateMaker is ERC721URIStorage {
   }
 
   function mintCertificateNFT(string memory _cid, address _to) external {
-    _nftsid.increment();
     uint _tokenId = _nftsid.current();
     _mint(_to, _tokenId);
     _setTokenURI(_tokenId, _cid);
+    
+    userCertificateList[_tokenId] = UserCertificate(_tokenId, _cid);
+    _nftsid.increment();
 
     emit CertificateNFTCreated(_tokenId, _cid, block.timestamp, msg.sender, _to);
   }
 
   function getAllCertificateTemplates() external view returns (CertificateTemplate[] memory) {
-        return certificateTemplateList;
-    }
+    return certificateTemplateList;
+  }
+
 }
