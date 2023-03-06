@@ -31,7 +31,7 @@ function CertificateTemplateList({ contract }) {
               <Card color='purple'>
                 <Image src={certificate.cid} wrapped ui={false} />
                 <Card.Content>
-                  {/* <Card.Header>{certificate.filename}</Card.Header> */}
+                  <Card.Header>{certificate.price / 10 ** 18} FIL</Card.Header>
                   <div style={{marginTop: '.7rem'}}>
                     <Button basic color='green' as={Link} to={`/certificate-maker/${certificate.id}`}>
                       View
