@@ -40,7 +40,6 @@ function CertificateMaker({ walletAddress, contract }) {
 
       const dateNow = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
       const certificateData = JSON.stringify({ 
-        to: this.to,
         title,
         name,
         dateNow
