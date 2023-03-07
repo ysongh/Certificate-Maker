@@ -88,7 +88,7 @@ function CertificateMaker({ walletAddress, contract }) {
               {title}
             </p><p className="certificatemaker__onTop certificatemaker__name">
               {name}
-            </p>\
+            </p>
           </Grid.Column>
           <Grid.Column mobile={16} tablet={7} computer={7}>
             <Card centered style={{ width: '100%'}}>
@@ -137,10 +137,7 @@ function CertificateMaker({ walletAddress, contract }) {
 
             {transactionHash &&
               <p className="transactionHash">
-                Success, see transaction {" "}
-                <a href={`https://mumbai.polygonscan.com/tx/${transactionHash}`} target="_blank" rel="noopener noreferrer">
-                  {transactionHash.substring(0, 10) + '...' + transactionHash.substring(56, 66)}
-                </a>
+                Success
               </p>
             }
           </Grid.Column>
