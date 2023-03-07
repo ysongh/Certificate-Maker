@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { Container, Button } from 'semantic-ui-react';
+import { Container, Message, Button } from 'semantic-ui-react';
 import UAuth from '@uauth/js';
 import Web3 from 'web3';
 
@@ -76,6 +76,10 @@ function Home({ setUDName, setWalletAddress, setContract }) {
   <path fill="#9640C1" fill-opacity="1" d="M0,64L48,74.7C96,85,192,107,288,101.3C384,96,480,64,576,53.3C672,43,768,53,864,90.7C960,128,1056,192,1152,192C1248,192,1344,128,1392,96L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
 </svg>
     <Container className="hero-content">
+      <Message  
+        compact
+        header='Contract is deployed on Filecoin Hyperspace Test Network'
+      />
       <h1>
         Send your Digital Certificate as NFT
       </h1>
@@ -84,6 +88,8 @@ function Home({ setUDName, setWalletAddress, setContract }) {
       <img className="ud-btn" src={UDbtn} onClick={loginWithUnstoppableDomains} alt="UD Logo" />
       <br />
       <Button className="ud-btn" color='green' onClick={connectToBlockchain}>Login with Metamask</Button>
+
+     
     </Container>
   </div>;
 }
