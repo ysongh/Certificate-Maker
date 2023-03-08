@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { Container, Segment, Menu, Button } from 'semantic-ui-react';
@@ -24,6 +24,10 @@ function Navbar({ walletAddress, udName, setWalletAddress, setContract }) {
   const history = useHistory();
 
   const [activeItem, setActiveItem] = useState('List');
+
+  useEffect(() => {
+    if (!walletAddress) history.push('/');
+  }, [])
 
   const logout = () => {
     setWalletAddress('');
