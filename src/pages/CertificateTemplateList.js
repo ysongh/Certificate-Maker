@@ -2,18 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Grid, Card, Image, Button } from 'semantic-ui-react';
 
+import Spinner from '../components/common/Spinner';
+
 function CertificateTemplateList({ contract }) {
   const [certificateTemplates, setCertificateTemplates] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadWorks();
   }, [])
 
   const loadWorks = async () => {
-    const templates = await contract.methods
-      .getAllCertificateTemplates()
-      .call();
-    setCertificateTemplates(templates);
+    try {
+      setLoading(true);
+
+      const templates = await contract.methods
+        .getAllCertificateTemplates()
+        .call();
+      setCertificateTemplates(templates);
+
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
   }
 
   return (
@@ -36,6 +48,7 @@ function CertificateTemplateList({ contract }) {
               </Card>
             </Grid.Column>
           ))}
+          {loading && <Spinner text="Loading" />}
         </Grid.Row>
       </Grid>
     </Container>
