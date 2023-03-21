@@ -12,10 +12,13 @@ contract CertificateMaker is ERC721URIStorage {
   CertificateTemplate[] public certificateTemplateList;
   mapping(uint => UserCertificate) public userCertificateList;
 
+  address public owner;
+
   struct CertificateTemplate {
     uint id;
     string cid;
     uint date;
+    bool isShow;
     address from;
   }
 
@@ -40,13 +43,20 @@ contract CertificateMaker is ERC721URIStorage {
     address to
   );
 
-  constructor() ERC721("Certificate Maker", "CMR") {}
+  constructor(address _owner) ERC721("Certificate Maker", "CMR") {
+    owner = _owner;
+  }
+
+  modifier onlyOwner() {
+    require(msg.sender == owner, "Only Owner to perfrom this action");
+    _;
+  }
 
   function createCertificateTemplate(string memory _cid) external {
     _templateCount.increment();
     uint _templateId = _templateCount.current();
 
-    certificateTemplateList.push(CertificateTemplate(_templateId, _cid, block.timestamp, msg.sender));
+    certificateTemplateList.push(CertificateTemplate(_templateId, _cid, block.timestamp, false, msg.sender));
 
     emit CertificateTemplateCreated(_templateId, _cid, block.timestamp, msg.sender);
   }
@@ -60,6 +70,14 @@ contract CertificateMaker is ERC721URIStorage {
     userCertificateList[_tokenId] = UserCertificate(_tokenId, _cid, _to);
 
     emit CertificateNFTCreated(_tokenId, _cid, block.timestamp, msg.sender, _to);
+  }
+
+  function hideCertificateTemplate(uint _id) external onlyOwner {
+    certificateTemplateList[_id].isShow = true;
+  }
+
+  function showCertificateTemplate(uint _id) external onlyOwner {
+    certificateTemplateList[_id].isShow = false;
   }
 
   function getAllCertificateTemplates() external view returns (CertificateTemplate[] memory) {
