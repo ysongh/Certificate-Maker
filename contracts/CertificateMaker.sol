@@ -16,7 +16,6 @@ contract CertificateMaker is ERC721URIStorage {
     uint id;
     string cid;
     uint date;
-    uint price;
     address from;
   }
 
@@ -30,7 +29,6 @@ contract CertificateMaker is ERC721URIStorage {
     uint id,
     string cid,
     uint date,
-    uint price,
     address from
   );
 
@@ -44,13 +42,13 @@ contract CertificateMaker is ERC721URIStorage {
 
   constructor() ERC721("Certificate Maker", "CMR") {}
 
-  function createCertificateTemplate(string memory _cid, uint _price) external {
+  function createCertificateTemplate(string memory _cid) external {
     _templateCount.increment();
     uint _templateId = _templateCount.current();
 
-    certificateTemplateList.push(CertificateTemplate(_templateId, _cid, block.timestamp, _price, msg.sender));
+    certificateTemplateList.push(CertificateTemplate(_templateId, _cid, block.timestamp, msg.sender));
 
-    emit CertificateTemplateCreated(_templateId, _cid, block.timestamp, _price, msg.sender);
+    emit CertificateTemplateCreated(_templateId, _cid, block.timestamp, msg.sender);
   }
 
   function mintCertificateNFT(string memory _cid, address _to) external {
