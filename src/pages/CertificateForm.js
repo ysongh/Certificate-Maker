@@ -10,14 +10,9 @@ import PlaceholderImage from '../components/common/PlaceholderImage';
 function CertificateForm({ walletAddress, contract }) {
   const history = useHistory();
 
-  const [price, setPrice] = useState('');
   const [imageURL, setImageURL] = useState('');
   const [loadingImage, setLoadingImage] = useState(false);
   const [loadingCreate, setLoadingCreate] = useState(false);
-
-  const handleAmount = async e => {
-    setPrice(e.target.value);
-  }
 
   const uploadFileToSlate = async event => {
     try{
@@ -49,7 +44,7 @@ function CertificateForm({ walletAddress, contract }) {
     try{
       setLoadingCreate(true);
       const res = await contract.methods
-        .createCertificateTemplate(imageURL, window.web3.utils.toWei(price, 'Ether'))
+        .createCertificateTemplate(imageURL)
         .send({ from: walletAddress });
       console.log('mintCertificateTemplateNFT', res);
 
@@ -64,21 +59,13 @@ function CertificateForm({ walletAddress, contract }) {
 
   return (
     <Container>
-      <Card centered style={{ width: '100%'}}>
+      <Card centered style={{ minWidth: '600px' }}>
         <Card.Content>
           <Form>
             <Form.Group widths='equal'>
               <Form.Field>
                 <label>Upload Certificate Border (PNG only)</label>
                 <input type="file" onChange={uploadFileToSlate}/>
-              </Form.Field>
-              <Form.Field>
-                <label>Price (ETH)</label>
-                <Input
-                  value={price}
-                  onChange={handleAmount}
-                  icon='ethereum'
-                  iconPosition='left' />
               </Form.Field>
             </Form.Group>
 
