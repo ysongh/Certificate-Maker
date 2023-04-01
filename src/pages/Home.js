@@ -78,7 +78,7 @@ function Home({ setUDName, setWalletAddress, setContract }) {
     <Container className="hero-content">
       <Message  
         compact
-        header='Contract is deployed on Filecoin Hyperspace Test Network'
+        header='Contract is deployed on Filecoin Network'
       />
       <h1>
         Send your Digital Certificate as NFT
