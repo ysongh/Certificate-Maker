@@ -30,12 +30,11 @@
   "devDependencies": {
     "@chainlink/contracts": "^0.1.6",
     "@openzeppelin/contracts": "^4.8.1",
-    "@truffle/hdwallet-provider": "^1.4.3",
-    "nodemon": "^2.0.9"
+    "@truffle/hdwallet-provider": "^1.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "nodemon server/server.js",
+    "server": "node server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
